@@ -1,41 +1,33 @@
 import { useEffect, useState } from "react";
 import Orbs from "./components/Orbs";
 import getRandomSpell from "./helpers/getRandomSpell";
+
 function App() {
     const [orbsArray, setOrbsArray] = useState(["q", "q", "q"]);
     const [currentAnswer, setCurrentAnswer] = useState({
         name: "quas",
         orbs: "qqq",
     });
+    const [score, setScore] = useState(0);
 
-    let [score, setScore] = useState(0);
+    const generateRandomSpell = () => {
+        const { name, orbs } = getRandomSpell();
+        return { name, orbs };
+    };
 
     const invoke = () => {
         const userOrbsArray = orbsArray.sort().join("");
         const actualAnswerArray = currentAnswer.orbs.split("").sort().join("");
+        
+        if (userOrbsArray !== actualAnswerArray) return;
 
-        if (userOrbsArray !== actualAnswerArray) {
-            return;
-        }
-
-        const { name, orbs } = generateRandomSpell();
-        setCurrentAnswer({ name, orbs });
-        setScore(++score);
+        const newSpell = generateRandomSpell();
+        setCurrentAnswer(newSpell);
+        setScore((prevScore) => prevScore + 1);
     };
 
-    // Creates the current answer
-    const generateRandomSpell = () => {
-        const randomSpell = getRandomSpell();
-
-        const { name, orbs } = randomSpell;
-
-        return { name, orbs };
-    };
-
-    // Create a random answer when the page loads
     useEffect(() => {
         const { name, orbs } = generateRandomSpell();
-
         setCurrentAnswer({ name, orbs });
     }, []);
 
@@ -45,49 +37,46 @@ function App() {
         const handleOrbCreation = (e) => {
             const clickedKey = e.key.toLowerCase();
 
-            // shallow copy of the orbs array
-            const copyOfOrbsArray = [...orbsArray];
-
-            // call the invoker function and pass in the orbArray
-
             if (clickedKey === "r") invoke();
 
             if (!availableKeys.includes(e.key)) return;
 
-            // pop the last, add to the beginning
+            const copyOfOrbsArray = [...orbsArray];
             copyOfOrbsArray.shift();
             copyOfOrbsArray.push(clickedKey);
-
             setOrbsArray(copyOfOrbsArray);
         };
 
         document.addEventListener("keydown", handleOrbCreation);
 
-        // Cleanup function to remove the event listener when the component unmounts
         return () => {
             document.removeEventListener("keydown", handleOrbCreation);
         };
-    }, [orbsArray]);
+    }, [orbsArray, currentAnswer]);
 
     return (
         <>
-            <div className="bg-gray-100 p-[4px] rounded mb-4">Corret: {score}</div>
+            <div className="bg-gray-100 p-[4px] rounded mb-4">
+                Correct: {score}
+            </div>
 
             <div className="flex flex-col gap-10 items-center justify-center">
                 <img
                     className="w-[100px]"
-                    src={`/public/images/spells/${currentAnswer.name}.webp`}
-                ></img>
-
+                    src={`/images/spells/${currentAnswer.name}.webp`}
+                    alt={currentAnswer.name}
+                />
                 <div className="flex flex-row gap-4">
                     <div className="flex items-center justify-center gap-2 flex-row">
                         {orbsArray.map((orb, orbIdx) => (
-                            <Orbs orb={orb} key={orbIdx}></Orbs>
+                            <Orbs orb={orb} key={orbIdx} />
                         ))}
                     </div>
-
                     <div className="flex items-center justify-center flex-row max-w-[60px]">
-                        <img src="/public/images/spells/invoke.png"></img>
+                        <img
+                            src="/public/images/spells/invoke.png"
+                            alt="Invoke"
+                        />
                     </div>
                 </div>
             </div>
