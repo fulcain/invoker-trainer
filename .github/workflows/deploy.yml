@@ -18,8 +18,11 @@ jobs:
               with:
                   node-version: 16 # Replace with your desired Node.js version
 
+            - name: Install npm
+              run: npm install -g npm
+
             - name: Install dependencies
-              run: npm install # replace with your install command
+              run: npm install
 
             - name: Build the app
               run: npm run build # Replace with your build command
