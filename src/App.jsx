@@ -74,7 +74,7 @@ function App() {
                     </div>
                     <div className="flex items-center justify-center flex-row max-w-[60px]">
                         <img
-                            src="/public/images/spells/invoke.png"
+                            src="/images/spells/invoke.png"
                             alt="Invoke"
                         />
                     </div>
