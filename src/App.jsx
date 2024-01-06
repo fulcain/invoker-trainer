@@ -63,7 +63,7 @@ function App() {
             <div className="flex flex-col gap-10 items-center justify-center">
                 <img
                     className="w-[100px]"
-                    src={`/images/spells/${currentAnswer.name}.webp`}
+                    src={`./images/spells/${currentAnswer.name}.webp`}
                     alt={currentAnswer.name}
                 />
                 <div className="flex flex-row gap-4">
@@ -74,7 +74,7 @@ function App() {
                     </div>
                     <div className="flex items-center justify-center flex-row max-w-[60px]">
                         <img
-                            src="/images/spells/invoke.png"
+                            src="./images/spells/invoke.png"
                             alt="Invoke"
                         />
                     </div>
