@@ -11,14 +11,14 @@ function App() {
     const [score, setScore] = useState(0);
 
     const generateRandomSpell = () => {
-        const { name, orbs } = getRandomSpell();
-        return { name, orbs };
+        const { name, orbs, displayName } = getRandomSpell();
+        return { name, orbs, displayName };
     };
 
     const invoke = () => {
         const userOrbsArray = orbsArray.sort().join("");
         const actualAnswerArray = currentAnswer.orbs.split("").sort().join("");
-        
+
         if (userOrbsArray !== actualAnswerArray) return;
 
         const newSpell = generateRandomSpell();
@@ -27,8 +27,8 @@ function App() {
     };
 
     useEffect(() => {
-        const { name, orbs } = generateRandomSpell();
-        setCurrentAnswer({ name, orbs });
+        const { name, orbs, displayName } = generateRandomSpell();
+        setCurrentAnswer({ name, orbs, displayName });
     }, []);
 
     useEffect(() => {
@@ -61,11 +61,17 @@ function App() {
             </div>
 
             <div className="flex flex-col gap-10 items-center justify-center">
-                <img
-                    className="w-[100px]"
-                    src={`./images/spells/${currentAnswer.name}.webp`}
-                    alt={currentAnswer.name}
-                />
+                <div className="flex items-center flex-col gap-4">
+                    <div className="bg-gray-200 w-full flex items-centet justify-center">
+                        {currentAnswer.displayName}
+                    </div>
+
+                    <img
+                        className="w-[150px]"
+                        src={`./images/spells/${currentAnswer.name}.webp`}
+                        alt={currentAnswer.name}
+                    />
+                </div>
                 <div className="flex flex-row gap-4">
                     <div className="flex items-center justify-center gap-2 flex-row">
                         {orbsArray.map((orb, orbIdx) => (
@@ -73,10 +79,7 @@ function App() {
                         ))}
                     </div>
                     <div className="flex items-center justify-center flex-row max-w-[60px]">
-                        <img
-                            src="./images/spells/invoke.png"
-                            alt="Invoke"
-                        />
+                        <img src="./images/spells/invoke.png" alt="Invoke" />
                     </div>
                 </div>
             </div>
