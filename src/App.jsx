@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Orbs from "./components/Orbs";
 import getRandomSpell from "./helpers/getRandomSpell";
 
@@ -9,6 +9,8 @@ function App() {
         orbs: "qqq",
     });
     const [score, setScore] = useState(0);
+    const [answerStatus, setAnswerStatus] = useState("not answered");
+    const answerStatusElem = useRef(null);
 
     const generateRandomSpell = () => {
         const { name, orbs, displayName } = getRandomSpell();
@@ -19,10 +21,17 @@ function App() {
         const userOrbsArray = orbsArray.sort().join("");
         const actualAnswerArray = currentAnswer.orbs.split("").sort().join("");
 
-        if (userOrbsArray !== actualAnswerArray) return;
+        if (userOrbsArray !== actualAnswerArray) {
+            showAnswerResult("wrong!");
+            return;
+        }
 
         const newSpell = generateRandomSpell();
+
+        showAnswerResult("correct!");
+
         setCurrentAnswer(newSpell);
+
         setScore((prevScore) => prevScore + 1);
     };
 
@@ -30,6 +39,14 @@ function App() {
         const { name, orbs, displayName } = generateRandomSpell();
         setCurrentAnswer({ name, orbs, displayName });
     }, []);
+
+    const showAnswerResult = (text) => {
+        const color = text === "wrong!" ? "red" : "green";
+
+        answerStatusElem.current.style.display = "flex";
+        answerStatusElem.current.style.color = color;
+        answerStatusElem.current.textContent = text;
+    };
 
     useEffect(() => {
         const availableKeys = ["q", "w", "e"];
@@ -56,7 +73,11 @@ function App() {
 
     return (
         <>
-            <div className="bg-gray-100 p-[4px] rounded mb-4">
+            <div className="mb-4 text-white gap-2 flex items-center justify-center">
+                <span>Status: </span>
+                <span ref={answerStatusElem}>{answerStatus}</span>
+            </div>
+            <div className=" bg-gray-100 p-[4px] rounded mb-4">
                 Correct: {score}
             </div>
 
