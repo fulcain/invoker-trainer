@@ -9,7 +9,6 @@ function App() {
         orbs: "qqq",
     });
     const [score, setScore] = useState(0);
-    const [answerStatus, setAnswerStatus] = useState("not answered");
     const answerStatusElem = useRef(null);
 
     const generateRandomSpell = () => {
@@ -75,7 +74,7 @@ function App() {
         <>
             <div className="mb-4 text-white gap-2 flex items-center justify-center">
                 <span>Status: </span>
-                <span ref={answerStatusElem}>{answerStatus}</span>
+                <span ref={answerStatusElem}>not answered yet</span>
             </div>
             <div className=" bg-gray-100 p-[4px] rounded mb-4">
                 Correct: {score}
