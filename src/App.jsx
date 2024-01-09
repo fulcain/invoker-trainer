@@ -1,11 +1,11 @@
 import { useEffect, useState, useRef } from "react";
 import Orbs from "./components/Orbs";
-import getRandomSpell from "./helpers/getRandomSpell";
-import setHighestScoreToLS from "./helpers/setHighestScoreToLS";
 import silverBox from "/public/lib/silverBox/silverBox.min.js";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import mobileOrbs from "./data/mobile-orbs";
+import invoke from "./helpers/invoke";
+import generateRandomSpell from "./helpers/getRandomSpell"
 
 function App() {
     const [orbsArray, setOrbsArray] = useState(["q", "q", "q"]);
@@ -21,10 +21,6 @@ function App() {
     if (!prevHighestScore) localStorage.setItem("highestScore", 0);
     const [highestScore, setHighestScore] = useState(prevHighestScore ?? 0);
 
-    const generateRandomSpell = () => {
-        const { name, orbs, displayName } = getRandomSpell();
-        return { name, orbs, displayName };
-    };
 
     const showHelp = () => {
         // remove any previous silverBoxes
@@ -45,32 +41,6 @@ function App() {
         });
     }, []);
 
-    const invoke = () => {
-        const userOrbsArray = orbsArray.sort().join("");
-        const actualAnswerArray = currentAnswer.orbs.split("").sort().join("");
-
-        if (userOrbsArray !== actualAnswerArray) {
-            // Change the answer result to wrong
-            showAnswerResult("wrong!");
-
-            // pass the highest score to set highest score function
-            setHighestScoreToLS(score, setHighestScore);
-
-            // set the score state to 0
-            setScore(0);
-
-            return;
-        }
-
-        const newSpell = generateRandomSpell();
-
-        showAnswerResult("correct!");
-
-        setCurrentAnswer(newSpell);
-
-        setScore((prevScore) => prevScore + 1);
-    };
-
     useEffect(() => {
         const { name, orbs, displayName } = generateRandomSpell();
         setCurrentAnswer({ name, orbs, displayName });
@@ -86,7 +56,15 @@ function App() {
 
     const createMobileOrbs = (orb) => {
         if (orb === "r") {
-            invoke();
+            invoke({
+                orbsArray,
+                currentAnswer,
+                showAnswerResult,
+                setHighestScore,
+                setScore,
+                score,
+                setCurrentAnswer,
+            });
             return;
         }
 
@@ -102,7 +80,16 @@ function App() {
         const handleOrbCreation = (e) => {
             const clickedKey = e.key.toLowerCase();
 
-            if (clickedKey === "r") invoke();
+            if (clickedKey === "r")
+                invoke({
+                    orbsArray,
+                    currentAnswer,
+                    showAnswerResult,
+                    setHighestScore,
+                    setScore,
+                    score,
+                    setCurrentAnswer,
+                });
 
             if (!availableKeys.includes(e.key)) return;
 
@@ -167,7 +154,7 @@ function App() {
                             ))}
                         </div>
 
-                        <div className="hidden relative lg:flex items-center justify-center flex-row max-w-[60px]">
+                        <div className="hidden relative lg:flex items-center justify-center flex-row max-w-[80px]">
                             <div className="absolute px-2 -py-2 rounded bg-gray-100 top-0 left-0">
                                 R
                             </div>
