@@ -118,20 +118,20 @@ function App() {
                     ?
                 </div>
             </Tooltip>
-            <div className="mb-4 text-white gap-2 flex items-center justify-center">
+            <div className="mb-4 bg-gray-500 rounded-md p-2 gap-1 flex items-center justify-center">
                 <span>Status: </span>
                 <span ref={answerStatusElem}>not answered yet</span>
             </div>
-            <div className=" bg-green-400 p-[4px] rounded mb-4">
+            <div className="rounded-md text-center p-2 bg-green-400 mb-4">
                 Highest Score: {highestScore}
             </div>
-            <div className=" bg-gray-100 p-[4px] rounded mb-4">
+            <div className="rounded-md text-center p-2 bg-gray-500 mb-4">
                 Current Score: {score}
             </div>
 
             <div className="flex flex-col gap-10 items-center justify-center">
                 <div className="flex items-center flex-col gap-4">
-                    <div className="bg-gray-200 w-full flex items-centet justify-center">
+                    <div className="bg-gray-500 w-full flex items-center p-2 rounded justify-center">
                         {currentAnswer.displayName}
                     </div>
                     <img
