@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import Orbs from "./components/Orbs";
 import getRandomSpell from "./helpers/getRandomSpell";
-
+import setHighestScoreToLS from "./helpers/setHighestScoreToLS"
 function App() {
     const [orbsArray, setOrbsArray] = useState(["q", "q", "q"]);
     const [currentAnswer, setCurrentAnswer] = useState({
@@ -10,6 +10,11 @@ function App() {
     });
     const [score, setScore] = useState(0);
     const answerStatusElem = useRef(null);
+
+    // Initalize the highest score
+    const prevHighestScore = localStorage.getItem("highestScore");
+    if (!prevHighestScore) localStorage.setItem("highestScore", 0);
+    const [highestScore, setHighestScore] = useState(prevHighestScore)
 
     const generateRandomSpell = () => {
         const { name, orbs, displayName } = getRandomSpell();
@@ -21,7 +26,18 @@ function App() {
         const actualAnswerArray = currentAnswer.orbs.split("").sort().join("");
 
         if (userOrbsArray !== actualAnswerArray) {
+            // Change the answer result to wrong
             showAnswerResult("wrong!");
+
+            // pass the highest score to set highest score function 
+            setHighestScoreToLS(score)
+
+            // set the highest score to the last score
+            setHighestScore(score)
+
+            // set the score state to 0
+            setScore(0);
+
             return;
         }
 
@@ -69,15 +85,17 @@ function App() {
             document.removeEventListener("keydown", handleOrbCreation);
         };
     }, [orbsArray, currentAnswer]);
-
     return (
         <>
             <div className="mb-4 text-white gap-2 flex items-center justify-center">
                 <span>Status: </span>
                 <span ref={answerStatusElem}>not answered yet</span>
             </div>
+            <div className=" bg-green-400 p-[4px] rounded mb-4">
+                Highest Score: {highestScore}
+            </div>
             <div className=" bg-gray-100 p-[4px] rounded mb-4">
-                Correct: {score}
+                Current Score: {score}
             </div>
 
             <div className="flex flex-col gap-10 items-center justify-center">
@@ -85,7 +103,6 @@ function App() {
                     <div className="bg-gray-200 w-full flex items-centet justify-center">
                         {currentAnswer.displayName}
                     </div>
-
                     <img
                         className="w-[150px]"
                         src={`./images/spells/${currentAnswer.name}.webp`}
