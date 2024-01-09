@@ -1,5 +1,4 @@
 # Invoker Trainer
-This app only works with a keyboard!
 
 ## What is this app?
 This app is designed to help you enhance your skills with the [Invoker](https://www.dota2.com/hero/invoker) Hero in the game [Dota2](https://www.dota2.com/home).
