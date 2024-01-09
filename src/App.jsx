@@ -17,7 +17,7 @@ function App() {
     // Initalize the highest score
     const prevHighestScore = localStorage.getItem("highestScore");
     if (!prevHighestScore) localStorage.setItem("highestScore", 0);
-    const [highestScore, setHighestScore] = useState(prevHighestScore);
+    const [highestScore, setHighestScore] = useState(prevHighestScore ?? 0);
 
     const generateRandomSpell = () => {
         const { name, orbs, displayName } = getRandomSpell();
