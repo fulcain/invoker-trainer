@@ -2,6 +2,9 @@ import { useEffect, useState, useRef } from "react";
 import Orbs from "./components/Orbs";
 import getRandomSpell from "./helpers/getRandomSpell";
 import setHighestScoreToLS from "./helpers/setHighestScoreToLS";
+import silverBox from "/public/lib/silverBox/silverBox.min.js";
+import Tooltip from "@mui/material/Tooltip";
+import Zoom from "@mui/material/Zoom";
 function App() {
     const [orbsArray, setOrbsArray] = useState(["q", "q", "q"]);
     const [currentAnswer, setCurrentAnswer] = useState({
@@ -21,6 +24,25 @@ function App() {
         return { name, orbs, displayName };
     };
 
+    const showHelp = () => {
+        // remove any previous silverBoxes
+        silverBox({
+            removeSilverBox: "all",
+        });
+
+        silverBox({
+            showCloseButton: true,
+            html: "<img src='./images/spells-help.webp'>",
+        });
+    };
+
+    // Add event for showing the Invoker help
+    useEffect(() => {
+        document.addEventListener("keypress", (e) => {
+            if (e.key === "h") showHelp();
+        });
+    }, []);
+
     const invoke = () => {
         const userOrbsArray = orbsArray.sort().join("");
         const actualAnswerArray = currentAnswer.orbs.split("").sort().join("");
@@ -30,7 +52,7 @@ function App() {
             showAnswerResult("wrong!");
 
             // pass the highest score to set highest score function
-            setHighestScoreToLS(score,setHighestScore);
+            setHighestScoreToLS(score, setHighestScore);
 
             // set the score state to 0
             setScore(0);
@@ -84,6 +106,18 @@ function App() {
     }, [orbsArray, currentAnswer]);
     return (
         <>
+            <Tooltip
+                title="Press h to show help"
+                arrow
+                TransitionComponent={Zoom}
+            >
+                <div
+                    className="fixed top-10 right-52 bg-white text-black px-4 py-2 rounded-full cursor-pointer"
+                    onClick={showHelp}
+                >
+                    ?
+                </div>
+            </Tooltip>
             <div className="mb-4 text-white gap-2 flex items-center justify-center">
                 <span>Status: </span>
                 <span ref={answerStatusElem}>not answered yet</span>
@@ -113,7 +147,9 @@ function App() {
                         ))}
                     </div>
                     <div className="relative flex items-center justify-center flex-row max-w-[60px]">
-                        <div className="absolute px-2 -py-2 rounded bg-gray-100 top-0 left-0">R</div>
+                        <div className="absolute px-2 -py-2 rounded bg-gray-100 top-0 left-0">
+                            R
+                        </div>
                         <img src="./images/spells/invoke.png" alt="Invoke" />
                     </div>
                 </div>
