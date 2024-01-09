@@ -1,7 +1,7 @@
 # Invoker Trainer
 
 ## What is this app?
-This app is designed to help you enhance your skills with the Invoker Hero in the game Dota 2.
+This app is designed to help you enhance your skills with the [Invoker](https://www.dota2.com/hero/invoker) Hero in the game [Dota2](https://www.dota2.com/home).
 
 ## How does it work?
 To progress through the training, you must recreate the spell displayed on the page and press 'R'. If your input is correct, you'll move on to the next spell, and so forth.
