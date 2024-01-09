@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import Orbs from "./components/Orbs";
 import getRandomSpell from "./helpers/getRandomSpell";
-import setHighestScoreToLS from "./helpers/setHighestScoreToLS"
+import setHighestScoreToLS from "./helpers/setHighestScoreToLS";
 function App() {
     const [orbsArray, setOrbsArray] = useState(["q", "q", "q"]);
     const [currentAnswer, setCurrentAnswer] = useState({
@@ -14,7 +14,7 @@ function App() {
     // Initalize the highest score
     const prevHighestScore = localStorage.getItem("highestScore");
     if (!prevHighestScore) localStorage.setItem("highestScore", 0);
-    const [highestScore, setHighestScore] = useState(prevHighestScore)
+    const [highestScore, setHighestScore] = useState(prevHighestScore);
 
     const generateRandomSpell = () => {
         const { name, orbs, displayName } = getRandomSpell();
@@ -29,11 +29,8 @@ function App() {
             // Change the answer result to wrong
             showAnswerResult("wrong!");
 
-            // pass the highest score to set highest score function 
-            setHighestScoreToLS(score)
-
-            // set the highest score to the last score
-            setHighestScore(score)
+            // pass the highest score to set highest score function
+            setHighestScoreToLS(score,setHighestScore);
 
             // set the score state to 0
             setScore(0);
@@ -115,7 +112,8 @@ function App() {
                             <Orbs orb={orb} key={orbIdx} />
                         ))}
                     </div>
-                    <div className="flex items-center justify-center flex-row max-w-[60px]">
+                    <div className="relative flex items-center justify-center flex-row max-w-[60px]">
+                        <div className="absolute px-2 -py-2 rounded bg-gray-100 top-0 left-0">R</div>
                         <img src="./images/spells/invoke.png" alt="Invoke" />
                     </div>
                 </div>

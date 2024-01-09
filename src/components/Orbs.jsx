@@ -4,7 +4,7 @@ const Orbs = ({ orb }) => {
     const orbImage = `./images/orbs/${orbs[orb]}.png`;
     return (
         <>
-            <div className="w-[60px] h-[60px] rounded-full flex justify-center bg-slate-900 text-white overflow-hidden">
+            <div className="w-[60px] h-[60px] flex justify-center bg-slate-900 text-white overflow-hidden">
                 <img src={orbImage}></img>
             </div>
         </>
