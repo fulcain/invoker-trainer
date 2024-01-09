@@ -132,13 +132,16 @@ function App() {
                     ?
                 </div>
             </Tooltip>
+
             <div className="mb-4 bg-gray-500 rounded-md p-2 gap-1 flex items-center justify-center">
                 <span>Status: </span>
                 <span ref={answerStatusElem}>not answered yet</span>
             </div>
+
             <div className="rounded-md text-center p-2 bg-green-400 mb-4">
                 Highest Score: {highestScore}
             </div>
+
             <div className="rounded-md text-center p-2 bg-gray-500 mb-4">
                 Current Score: {score}
             </div>
@@ -148,12 +151,14 @@ function App() {
                     <div className="bg-gray-500 w-full flex items-center p-2 rounded justify-center">
                         {currentAnswer.displayName}
                     </div>
+
                     <img
                         className="w-[150px]"
                         src={`./images/spells/${currentAnswer.name}.webp`}
                         alt={currentAnswer.name}
                     />
                 </div>
+
                 <div className="flex flex-col items-center gap-5">
                     <div className="flex flex-row gap-4">
                         <div className="flex items-center justify-center gap-2 flex-row">
@@ -161,10 +166,12 @@ function App() {
                                 <Orbs orb={orb} key={orbIdx} />
                             ))}
                         </div>
+
                         <div className="hidden relative lg:flex items-center justify-center flex-row max-w-[60px]">
                             <div className="absolute px-2 -py-2 rounded bg-gray-100 top-0 left-0">
                                 R
                             </div>
+
                             <img
                                 src="./images/spells/invoke.png"
                                 alt="Invoke"
