@@ -86,7 +86,7 @@ function App() {
     }, [orbsArray, currentAnswer]);
     return (
         <>
-            <ShowHelp />
+            <ShowHelp showHelp={showHelp}/>
 
             <div className="mb-4 bg-gray-500 rounded-md p-2 gap-1 flex items-center justify-center">
                 <span>Status: </span>
