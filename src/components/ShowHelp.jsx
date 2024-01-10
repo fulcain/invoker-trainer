@@ -1,6 +1,6 @@
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
-import showHelp from "../helpers/showHelp.js"
+import showHelp from "../helpers/showHelp.js";
 
 const ShowHelp = () => {
     return (

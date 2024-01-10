@@ -5,6 +5,7 @@ import invoke from "./helpers/invoke";
 import generateRandomSpell from "./helpers/getRandomSpell";
 import showHelpModal from "./helpers/showHelp";
 import ShowHelp from "./components/ShowHelp";
+import GameStatus from "./components/GameStatus";
 
 function App() {
     const [orbsArray, setOrbsArray] = useState(["q", "q", "q"]);
@@ -86,20 +87,13 @@ function App() {
     }, [orbsArray, currentAnswer]);
     return (
         <>
-            <ShowHelp showHelpModal={showHelpModal}/>
+            <ShowHelp />
 
-            <div className="mb-4 bg-gray-500 rounded-md p-2 gap-1 flex items-center justify-center">
-                <span>Status: </span>
-                <span ref={answerStatusElem}>not answered yet</span>
-            </div>
-
-            <div className="rounded-md text-center p-2 bg-green-400 mb-4">
-                Highest Score: {highestScore}
-            </div>
-
-            <div className="rounded-md text-center p-2 bg-gray-500 mb-4">
-                Current Score: {score}
-            </div>
+            <GameStatus
+                answerStatusElem={answerStatusElem}
+                highestScore={highestScore}
+                score={score}
+            />
 
             <div className="flex flex-col gap-10 items-center justify-center">
                 <div className="flex items-center flex-col gap-4">
