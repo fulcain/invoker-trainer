@@ -4,11 +4,9 @@ import generateRandomSpell from "./helpers/getRandomSpell";
 import showHelpModal from "./helpers/showHelp";
 
 // Components
-import Orbs from "./components/Orbs";
 import ShowHelp from "./components/ShowHelp";
 import GameStatus from "./components/GameStatus";
-import MobileOrbs from "./components/MobileOrbs";
-import CurrentOrbs from "./components/CurrentOrbs";
+import GameSection from "./components/GameSection"
 
 function App() {
     const [orbsArray, setOrbsArray] = useState(["q", "q", "q"]);
@@ -98,25 +96,11 @@ function App() {
                 score={score}
             />
 
-            <div className="flex flex-col gap-10 items-center justify-center">
-                <div className="flex items-center flex-col gap-4">
-                    <div className="bg-gray-500 w-full flex items-center p-2 rounded justify-center">
-                        {currentAnswer.displayName}
-                    </div>
-
-                    <img
-                        className="w-[150px]"
-                        src={`./images/spells/${currentAnswer.name}.webp`}
-                        alt={currentAnswer.name}
-                    />
-                </div>
-
-                <div className="flex flex-col items-center gap-5">
-                    <CurrentOrbs orbsArray={orbsArray} />
-
-                    <MobileOrbs createMobileOrbs={createMobileOrbs} />
-                </div>
-            </div>
+            <GameSection
+                currentAnswer={currentAnswer}
+                orbsArray={orbsArray}
+                createMobileOrbs={createMobileOrbs}
+            />
         </>
     );
 }
