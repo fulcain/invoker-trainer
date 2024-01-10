@@ -1,13 +1,13 @@
-
 import { useEffect, useState, useRef } from "react";
 import invoke from "../helpers/invoke";
 import generateRandomSpell from "../helpers/getRandomSpell";
 import showHelpModal from "../helpers/showHelp";
+import addNewOrbToList from "../helpers/addNewOrbToList";
 
 // Components
 import ShowHelp from "../components/ShowHelp";
 import GameStatus from "../components/GameStatus";
-import GameSection from "../components/GameSection"
+import GameSection from "../components/GameSection";
 
 function InvokerTrainer() {
     const [orbsArray, setOrbsArray] = useState(["q", "q", "q"]);
@@ -47,13 +47,14 @@ function InvokerTrainer() {
                 answerStatusElem,
                 setCurrentAnswer,
             });
+
             return;
         }
-
-        const copyOfOrbsArray = [...orbsArray];
-        copyOfOrbsArray.shift();
-        copyOfOrbsArray.push(orb);
-        setOrbsArray(copyOfOrbsArray);
+        addNewOrbToList({
+            orbsArray,
+            setOrbsArray,
+            orb,
+        });
     };
 
     useEffect(() => {
@@ -75,10 +76,11 @@ function InvokerTrainer() {
 
             if (!availableKeys.includes(e.key)) return;
 
-            const copyOfOrbsArray = [...orbsArray];
-            copyOfOrbsArray.shift();
-            copyOfOrbsArray.push(clickedKey);
-            setOrbsArray(copyOfOrbsArray);
+            addNewOrbToList({
+                orbsArray,
+                setOrbsArray,
+                orb: clickedKey,
+            });
         };
 
         document.addEventListener("keydown", handleOrbCreation);
