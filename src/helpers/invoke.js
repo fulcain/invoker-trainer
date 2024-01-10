@@ -15,7 +15,7 @@ const invoke = ({
 
     if (userOrbsArray !== actualAnswerArray) {
         // Change the answer result to wrong
-        showAnswerResult("wrong!",answerStatusElem);
+        showAnswerResult("wrong!", answerStatusElem);
 
         // pass the highest score to set highest score function
         setHighestScoreToLS(score, setHighestScore);
@@ -28,7 +28,7 @@ const invoke = ({
 
     const newSpell = generateRandomSpell();
 
-    showAnswerResult("correct!",answerStatusElem);
+    showAnswerResult("correct!", answerStatusElem);
 
     setCurrentAnswer(newSpell);
 

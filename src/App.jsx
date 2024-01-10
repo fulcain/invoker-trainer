@@ -1,11 +1,10 @@
 import { useEffect, useState, useRef } from "react";
 import Orbs from "./components/Orbs";
-import Tooltip from "@mui/material/Tooltip";
-import Zoom from "@mui/material/Zoom";
 import mobileOrbs from "./data/mobile-orbs";
 import invoke from "./helpers/invoke";
 import generateRandomSpell from "./helpers/getRandomSpell";
 import showHelp from "./helpers/showHelp";
+import ShowHelp from "./components/ShowHelp";
 
 function App() {
     const [orbsArray, setOrbsArray] = useState(["q", "q", "q"]);
@@ -28,6 +27,7 @@ function App() {
         });
     }, []);
 
+    // Generate random spell on page load
     useEffect(() => {
         const { name, orbs, displayName } = generateRandomSpell();
         setCurrentAnswer({ name, orbs, displayName });
@@ -86,18 +86,7 @@ function App() {
     }, [orbsArray, currentAnswer]);
     return (
         <>
-            <Tooltip
-                title="Press h to show help"
-                arrow
-                TransitionComponent={Zoom}
-            >
-                <div
-                    className="fixed top-[5%] right-[10%] bg-white text-black px-4 py-2 rounded-full cursor-pointer"
-                    onClick={showHelp}
-                >
-                    ?
-                </div>
-            </Tooltip>
+            <ShowHelp />
 
             <div className="mb-4 bg-gray-500 rounded-md p-2 gap-1 flex items-center justify-center">
                 <span>Status: </span>
