@@ -1,6 +1,6 @@
 import silverBox from "/public/lib/silverBox/silverBox.min.js";
 
-const showHelp = () => {
+const showHelpModal = () => {
     // remove any previous silverBoxes
     silverBox({
         removeSilverBox: "all",
@@ -12,4 +12,4 @@ const showHelp = () => {
     });
 };
 
-export default showHelp;
+export default showHelpModal;

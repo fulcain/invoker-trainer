@@ -3,7 +3,7 @@ import Orbs from "./components/Orbs";
 import mobileOrbs from "./data/mobile-orbs";
 import invoke from "./helpers/invoke";
 import generateRandomSpell from "./helpers/getRandomSpell";
-import showHelp from "./helpers/showHelp";
+import showHelpModal from "./helpers/showHelp";
 import ShowHelp from "./components/ShowHelp";
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
     // Add event for showing the Invoker help
     useEffect(() => {
         document.addEventListener("keypress", (e) => {
-            if (e.key === "h") showHelp();
+            if (e.key === "h") showHelpModal();
         });
     }, []);
 
@@ -86,7 +86,7 @@ function App() {
     }, [orbsArray, currentAnswer]);
     return (
         <>
-            <ShowHelp showHelp={showHelp}/>
+            <ShowHelp showHelpModal={showHelpModal}/>
 
             <div className="mb-4 bg-gray-500 rounded-md p-2 gap-1 flex items-center justify-center">
                 <span>Status: </span>
