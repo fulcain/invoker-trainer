@@ -1,12 +1,14 @@
 import { useEffect, useState, useRef } from "react";
-import Orbs from "./components/Orbs";
-import mobileOrbs from "./data/mobile-orbs";
 import invoke from "./helpers/invoke";
 import generateRandomSpell from "./helpers/getRandomSpell";
 import showHelpModal from "./helpers/showHelp";
+
+// Components
+import Orbs from "./components/Orbs";
 import ShowHelp from "./components/ShowHelp";
 import GameStatus from "./components/GameStatus";
 import MobileOrbs from "./components/MobileOrbs";
+import CurrentOrbs from "./components/CurrentOrbs";
 
 function App() {
     const [orbsArray, setOrbsArray] = useState(["q", "q", "q"]);
@@ -110,24 +112,7 @@ function App() {
                 </div>
 
                 <div className="flex flex-col items-center gap-5">
-                    <div className="flex flex-row gap-4">
-                        <div className="flex items-center justify-center gap-2 flex-row">
-                            {orbsArray.map((orb, orbIdx) => (
-                                <Orbs orb={orb} key={orbIdx} />
-                            ))}
-                        </div>
-
-                        <div className="hidden relative lg:flex items-center justify-center flex-row max-w-[80px]">
-                            <div className="absolute px-2 -py-2 rounded bg-gray-100 top-0 left-0">
-                                R
-                            </div>
-
-                            <img
-                                src="./images/spells/invoke.png"
-                                alt="Invoke"
-                            />
-                        </div>
-                    </div>
+                    <CurrentOrbs orbsArray={orbsArray} />
 
                     <MobileOrbs createMobileOrbs={createMobileOrbs} />
                 </div>
