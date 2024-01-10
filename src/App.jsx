@@ -1,11 +1,11 @@
 import { useEffect, useState, useRef } from "react";
 import Orbs from "./components/Orbs";
-import silverBox from "/public/lib/silverBox/silverBox.min.js";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import mobileOrbs from "./data/mobile-orbs";
 import invoke from "./helpers/invoke";
-import generateRandomSpell from "./helpers/getRandomSpell"
+import generateRandomSpell from "./helpers/getRandomSpell";
+import showHelp from "./helpers/showHelp";
 
 function App() {
     const [orbsArray, setOrbsArray] = useState(["q", "q", "q"]);
@@ -21,19 +21,6 @@ function App() {
     if (!prevHighestScore) localStorage.setItem("highestScore", 0);
     const [highestScore, setHighestScore] = useState(prevHighestScore ?? 0);
 
-
-    const showHelp = () => {
-        // remove any previous silverBoxes
-        silverBox({
-            removeSilverBox: "all",
-        });
-
-        silverBox({
-            showCloseButton: true,
-            html: "<img src='./images/spells-help.webp'>",
-        });
-    };
-
     // Add event for showing the Invoker help
     useEffect(() => {
         document.addEventListener("keypress", (e) => {
@@ -46,23 +33,15 @@ function App() {
         setCurrentAnswer({ name, orbs, displayName });
     }, []);
 
-    const showAnswerResult = (text) => {
-        const color = text === "wrong!" ? "red" : "green";
-
-        answerStatusElem.current.style.display = "flex";
-        answerStatusElem.current.style.color = color;
-        answerStatusElem.current.textContent = text;
-    };
-
     const createMobileOrbs = (orb) => {
         if (orb === "r") {
             invoke({
                 orbsArray,
                 currentAnswer,
-                showAnswerResult,
                 setHighestScore,
                 setScore,
                 score,
+                answerStatusElem,
                 setCurrentAnswer,
             });
             return;
@@ -84,10 +63,10 @@ function App() {
                 invoke({
                     orbsArray,
                     currentAnswer,
-                    showAnswerResult,
                     setHighestScore,
                     setScore,
                     score,
+                    answerStatusElem,
                     setCurrentAnswer,
                 });
 

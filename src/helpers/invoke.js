@@ -1,12 +1,13 @@
-import setHighestScoreToLS from "../helpers/setHighestScoreToLS.js" 
+import setHighestScoreToLS from "../helpers/setHighestScoreToLS.js";
 import generateRandomSpell from "./generateRandomSpell.js";
+import showAnswerResult from "./showAnswerResult.js";
 const invoke = ({
     orbsArray,
     currentAnswer,
-    showAnswerResult,
     setHighestScore,
     setScore,
     score,
+    answerStatusElem,
     setCurrentAnswer,
 }) => {
     const userOrbsArray = orbsArray.sort().join("");
@@ -14,7 +15,7 @@ const invoke = ({
 
     if (userOrbsArray !== actualAnswerArray) {
         // Change the answer result to wrong
-        showAnswerResult("wrong!");
+        showAnswerResult("wrong!",answerStatusElem);
 
         // pass the highest score to set highest score function
         setHighestScoreToLS(score, setHighestScore);
@@ -27,7 +28,7 @@ const invoke = ({
 
     const newSpell = generateRandomSpell();
 
-    showAnswerResult("correct!");
+    showAnswerResult("correct!",answerStatusElem);
 
     setCurrentAnswer(newSpell);
 
